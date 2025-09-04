@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Management</title>
+  <link rel="stylesheet" href="EmployeeManagement.css"> <!-- Link to CSS -->
+</head>
+<body>
+  <h2>Employee Management</h2>
+
+  <label>Employee Number:</label>
+  <input type="text" id="empNo" placeholder="e.g. 101" 
+         oninput="this.value=this.value.replace(/[^0-9]/g,'')"><br>
+
+  <label>Name:</label>
+  <input type="text" id="empName" placeholder="e.g. Karthik"><br>
+
+  <label>DA:</label>
+  <input type="text" id="empDA" placeholder="e.g. 5000" 
+         oninput="this.value=this.value.replace(/[^0-9]/g,'')"><br>
+
+  <button onclick="addEmployee()">Add Employee</button>
+
+  <table id="empTable">
+    <thead>
+      <tr>
+        <th>Employee No</th>
+        <th>Name</th>
+        <th>DA</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    function addEmployee() {
+      let no = document.getElementById("empNo").value.trim();
+      let name = document.getElementById("empName").value.trim();
+      let da = document.getElementById("empDA").value.trim();
+
+      if (!no || !name || !da) {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      let tableBody = document.querySelector("#empTable tbody");
+
+      let row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${no}</td>
+        <td>${name}</td>
+        <td>${da}</td>
+        <td><button class="delete-btn" onclick="deleteEmployee(this)">Delete</button></td>
+      `;
+
+      tableBody.appendChild(row);
+
+      // clear inputs
+      document.getElementById("empNo").value = "";
+      document.getElementById("empName").value = "";
+      document.getElementById("empDA").value = "";
+    }
+
+    function deleteEmployee(btn) {
+      let row = btn.parentElement.parentElement;
+      row.remove();
+    }
+  </script>
+</body>
+</html>
